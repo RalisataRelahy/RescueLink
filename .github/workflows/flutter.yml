@@ -49,7 +49,9 @@ jobs:
         run: flutter config --enable-linux-desktop
 
       - name: Run Integration Tests
-        run: xvfb-run --auto-servernum flutter test integration_test/ -d linux
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: flutter test integration_test -d linux -r github
 
       - name: Build Release Android APK
         run: flutter build apk --release --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
