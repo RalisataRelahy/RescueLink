@@ -1,0 +1,93 @@
+================================================================================
+                      RESCUELINK — DOCUMENTATION COMPLÈTE & TODOs
+================================================================================
+
+1. PRÉSENTATION DU PROJET
+--------------------------------------------------------------------------------
+RescueLink est une application mobile et web Flutter "Production-Ready" destinée 
+au signalement communautaire d'incidents et à leur suivi en temps réel. 
+L'application privilégie la légèreté, l'accessibilité, l'internationalisation 
+(Français / Anglais), la réactivité et le fonctionnement hors-ligne (Offline-First).
+
+
+2. LISTE & EXPLICATION DE TOUTES LES FONCTIONNALITÉS
+--------------------------------------------------------------------------------
+
+[A] Authentification & Sécurité (Feature Auth)
+- Login / Inscription : Authentification via Supabase Auth (email / mot de passe).
+- Route Guard : Redirection automatique vers /login si non authentifié, et vers /dashboard si déjà connecté.
+- Profil Utilisateur : Création automatique d'une ligne de profil dans la base Supabase lors de l'inscription.
+
+[B] Tableau de Bord (Feature Dashboard)
+- Compteurs en temps réel : Incidents totaux, actifs, résolus et critiques.
+- Score de Risque Local (Risk Score) : Calcul dynamique d'une jauge de risque (0 à 100) basée sur la gravité et le nombre d'incidents actifs dans le secteur.
+- Feed Récent : Affichage des derniers signalements sous forme de cartes interactives.
+- Pull-to-Refresh : Actualisation instantanée par glissement.
+
+[C] Signalement d'Incident (Feature Incidents)
+- Formulaire complet : Choix de catégorie (Accident, Incendie, Inondation, Route bloquée, Danger, Eau, Éclairage, Autre).
+- Géolocalisation automatique : Capture exacte des coordonnées GPS (Latitude / Longitude) avec gestion des permissions.
+- Compression Média : Prise de photo via caméra ou galerie avec pipeline de compression automatique (Qualité medium / Dimensions adaptées).
+- Priorité Déterministe : Algorithme (PriorityCalculator) calculant automatiquement la priorité (LOW, MEDIUM, HIGH, CRITICAL) en fonction de la catégorie, des personnes affectées et du blocage de voie.
+
+[D] Mode Offline-First & Synchronisation Réseau (Core Sync)
+- Sauvegarde SQLite Locale (`sqflite`) : Si Internet est indisponible, l'incident est sauvegardé localement avec le statut `PENDING_SYNC`.
+- SyncService : Écouteur réseau réactif (`connectivity_plus`) qui synchronise automatiquement les signalements locaux vers la base Supabase dès le rétablissement de la connexion. Aucun signalement n'est perdu.
+
+[E] Carte Interactive & Zones à Risque (Feature Map)
+- Tuiles OpenStreetMap (`flutter_map`) : Affichage cartographique haute performance sans dépendance payante (pas de clé Google Maps requise).
+- Marqueurs Dynamiques : Icônes colorées selon le niveau de priorité de l'incident.
+- Zones à Risque (Heatmap simplifiée) : Représentation visuelle par des cercles rouges translucides autour des incidents critiques.
+- Filtrage rapide : Filtrage dynamique des marqueurs par catégorie et par priorité.
+
+[F] Détail & Historique / Timeline (Feature Incident Detail)
+- Vue Détaillée : Description complète, catégorie, photo haute qualité et coordonnées GPS.
+- Timeline Chronologique : Suivi de l'évolution du statut de l'incident (REPORTED -> ACKNOWLEDGED -> IN_PROGRESS -> RESOLVED / CANCELLED) avec horodatage.
+
+[G] Notifications (Feature Notifications)
+- Notifications Locales (`flutter_local_notifications`) : Alertes pour les événements majeurs (validation d'incident, démarrage d'intervention, résolution et fin de synchro).
+- Écran d'Historique : Liste centralisée des notifications reçues.
+
+[H] Profil, i18n & Accessibilité (Feature Profile)
+- Internationalisation Dynamique (i18n) : Changement à la volée de la langue (Français / English) sans redémarrer l'application.
+- Thème Dynamique : Sélecteur de thème (Clair / Sombre / Système).
+- Mode Haute Lisibilité : Support d'accessibilité avec contrastes renforcés et sémantique Material 3 complète (support lecteurs d'écran).
+
+
+3. DESIGN UI/UX FRIENDLY & RESPONSIVITÉ
+--------------------------------------------------------------------------------
+- Composants Material 3 : Composants visuels modernes, épurés et cohérents.
+- Hierarchie Visuelle : Utilisation de couleurs de priorité standardisées (Rouge=Critique, Orange=Élevée, Amber=Moyenne, Vert=Faible).
+- Return UI Instantané : Feedback immédiat via SnackBar et indicateurs de chargement sur chaque action.
+- Micro-Animations Légères : Rebuilds ciblés via Riverpod (`select`) et listes lazy (`ListView.builder`) évitant toute saccade ou ralentissement.
+- Design Adaptatif : Layouts flexibles avec ScrollViews et Grids réactifs s'adaptant à toutes les tailles d'écrans (smartphones & tablettes).
+
+
+4. CHECKLIST TODOs AVANT LE DÉPLOIEMENT EN PRODUCTION
+--------------------------------------------------------------------------------
+
+[ ] 1. Configurer l'instance Supabase de Production
+    - Exécuter le fichier `supabase_schema.sql` dans l'éditeur SQL de votre projet Supabase.
+    - Créer un Bucket Storage nommé `photos` dans Supabase Storage et le passer en mode "Public".
+    - Activer la vérification des emails (si souhaité) dans Supabase Auth.
+
+[ ] 2. Configurer les Variables d'Environnement
+    - Remplacer les clés dans le fichier `.env` ou lors du build avec les vraies valeurs :
+      --dart-define=SUPABASE_URL=https://<votre-projet>.supabase.co
+      --dart-define=SUPABASE_ANON_KEY=<votre-cle-anon-real>
+
+[ ] 3. Configuration des Keystores & Certificats Android / iOS
+    - Android : Générer un fichier `key.properties` et `upload-keystore.jks` pour la signature d'APK/App Bundle.
+    - iOS : Configurer les certificats de signature Apple Developer et le Profil de Provisioning dans Xcode.
+
+[ ] 4. Tester sur Appareils Réels
+    - Tester l'appareil photo et la géolocalisation GPS sur un téléphone réel Android et iOS.
+    - Tester le mode avion (Offline) et la reconnexion pour valider la synchronisation.
+
+[ ] 5. Lancer le Pipeline de Build Final
+    - Exécuter la commande :
+      flutter build appbundle --release --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...
+
+================================================================================
+                          PROJET PRÊT POUR LA PRODUCTION !
+================================================================================
