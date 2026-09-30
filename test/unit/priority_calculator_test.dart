@@ -26,7 +26,7 @@ void main() {
       expect(priority, IncidentPriority.low);
     });
 
-    test('given Flood category with 4 people affected then return Medium or High', () {
+    test('given Flood category with 4 people affected then return Medium', () {
       final priority = PriorityCalculator.calculatePriority(
         category: IncidentCategory.flood,
         roadBlocked: false,
@@ -48,6 +48,40 @@ void main() {
 
       // score = 30 (danger) + 15 (road) + 20 (>3 people) = 65 -> High
       expect(priority, IncidentPriority.high);
+    });
+
+    test('given Accident category with 10 people affected in critical zone then return Critical', () {
+      final priority = PriorityCalculator.calculatePriority(
+        category: IncidentCategory.accident,
+        roadBlocked: true,
+        peopleAffected: 10,
+        isCriticalZone: true,
+      );
+
+      expect(priority, IncidentPriority.critical);
+    });
+
+    test('given Water category without road blocked or people affected then return Low', () {
+      final priority = PriorityCalculator.calculatePriority(
+        category: IncidentCategory.water,
+        roadBlocked: false,
+        peopleAffected: 0,
+        isCriticalZone: false,
+      );
+
+      expect(priority, IncidentPriority.low);
+    });
+
+    test('given Other category with road blocked only then return Low', () {
+      final priority = PriorityCalculator.calculatePriority(
+        category: IncidentCategory.other,
+        roadBlocked: true,
+        peopleAffected: 0,
+        isCriticalZone: false,
+      );
+
+      // score = 10 (other) + 15 (road) = 25 -> Low
+      expect(priority, IncidentPriority.low);
     });
   });
 }

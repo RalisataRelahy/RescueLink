@@ -51,5 +51,48 @@ void main() {
       expect(parsed.syncStatus, SyncStatus.pending);
       expect(parsed.localPhotoPath, '/tmp/photo.jpg');
     });
+
+    test('copyWith updates properties correctly', () {
+      final incident = IncidentModel(
+        id: 'inc-1',
+        userId: 'u-1',
+        category: IncidentCategory.fire,
+        description: 'Original description',
+        latitude: 10.0,
+        longitude: 20.0,
+        priority: IncidentPriority.medium,
+        status: IncidentStatus.reported,
+        createdAt: DateTime.now(),
+      );
+
+      final updated = incident.copyWith(
+        status: IncidentStatus.resolved,
+        description: 'Updated description',
+        syncStatus: SyncStatus.synced,
+      );
+
+      expect(updated.id, 'inc-1');
+      expect(updated.status, IncidentStatus.resolved);
+      expect(updated.description, 'Updated description');
+      expect(updated.syncStatus, SyncStatus.synced);
+    });
+
+    test('default syncStatus should be synced when created without explicit syncStatus', () {
+      final incident = IncidentModel(
+        id: 'inc-2',
+        userId: 'u-2',
+        category: IncidentCategory.water,
+        description: 'Pipe leak',
+        latitude: 0.0,
+        longitude: 0.0,
+        priority: IncidentPriority.low,
+        status: IncidentStatus.reported,
+        createdAt: DateTime.now(),
+      );
+
+      expect(incident.syncStatus, SyncStatus.synced);
+      expect(incident.peopleAffected, 0);
+      expect(incident.roadBlocked, false);
+    });
   });
 }

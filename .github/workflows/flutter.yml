@@ -40,5 +40,16 @@ jobs:
       - name: Run Unit & Widget Tests
         run: flutter test --coverage
 
+      - name: Install Linux Desktop Dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev xvfb
+
+      - name: Enable Linux Desktop
+        run: flutter config --enable-linux-desktop
+
+      - name: Run Integration Tests
+        run: xvfb-run --auto-servernum flutter test integration_test/
+
       - name: Build Release Android APK
         run: flutter build apk --release --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
