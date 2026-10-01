@@ -32,11 +32,13 @@ void main() {
 
       // Navigate to Map tab
       final mapTab = find.byIcon(Icons.map_outlined);
-      if (mapTab.evaluate().isNotEmpty) {
-        await tester.tap(mapTab);
-        await tester.pumpAndSettle();
-        expect(find.text('Map'), findsWidgets);
-      }
+
+      expect(mapTab, findsOneWidget);
+
+      await tester.tap(mapTab);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Map'), findsWidgets);
 
       // Navigate to Profile tab
       final profileTab = find.byIcon(Icons.person_outline);

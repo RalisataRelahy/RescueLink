@@ -1,6 +1,6 @@
 # RescueLink 
 
-[![CI/CD Pipeline](https://img.shields.io/badge/CI%2FCD-passing-brightgreen)](https://github.com/rescuelink/rescuelink/actions)
+[![CI/CD Pipeline](https://github.com/RalisataRelahy/RescueLink/actions/workflows/flutter.yml/badge.svg)](https://github.com/RalisataRelahy/RescueLink/actions)
 [![Flutter](https://img.shields.io/badge/Flutter-3.47.5-blue)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.13.4-blue)](https://dart.dev)
 [![Tests](https://img.shields.io/badge/Tests-32%20passed-brightgreen)](#-tests--quality-assurance)
@@ -8,18 +8,20 @@
 
 **RescueLink** est une application Flutter production-ready de signalement et de suivi d'incidents communautaires, conçue pour être **offline-first**, **accessible (a11y)**, **haute performance (60 FPS constant)** et **internationalisée (FR / EN)**.
 
----
-
-## 📸 Captures d'écran & Aperçu Visuel (Visual Showcase)
-
-|                                         Dashboard & Risk Score                                         |  Signalement d'Incident | 🗺️ Carte Interactive | ⚙️ Profil & Accessibilité |
-|:--------------------------------------------------------------------------------------------------------:| :---: | :---: | :---: |
-| ![Dashboard](https://raw.githubusercontent.com/rescuelink/rescuelink/main/doc/screenshots/dashboard.png) | ![Report](https://raw.githubusercontent.com/rescuelink/rescuelink/main/doc/screenshots/create_incident.png) | ![Map](https://raw.githubusercontent.com/rescuelink/rescuelink/main/doc/screenshots/map.png) | ![Profile](https://raw.githubusercontent.com/rescuelink/rescuelink/main/doc/screenshots/profile.png) |
-|                  *Calcul dynamique du Score de Risque local et compteurs en temps réel*                  | *Géolocalisation GPS, compression d'image et priorité déterministe* | *Tuiles OpenStreetMap, marqueurs colorés et cercles de risque* | *Sélecteur i18n (FR/EN), thème Clair/Sombre et Mode Haute Lisibilité* |
+**Repository GitHub Public** : [https://github.com/RalisataRelahy/RescueLink.git](https://github.com/RalisataRelahy/RescueLink.git)
 
 ---
 
-## 📱 Liste des Écrans (8 Écrans Fonctionnels)
+## Captures d'écran & Aperçu Visuel (Visual Showcase)
+
+| Dashboard & Risk Score |  Signalement d'Incident |                                       🗺 Carte Interactive                                       | ⚙️ Profil & Accessibilité |
+| :---: | :---: |:------------------------------------------------------------------------------------------------:| :---: |
+| ![Dashboard](https://raw.githubusercontent.com/RalisataRelahy/RescueLink/main/doc/screenshots/dashboard.png) | ![Report](https://raw.githubusercontent.com/RalisataRelahy/RescueLink/main/doc/screenshots/create_incident.png) | ![Map](https://raw.githubusercontent.com/RalisataRelahy/RescueLink/main/doc/screenshots/map.png) | ![Profile](https://raw.githubusercontent.com/RalisataRelahy/RescueLink/main/doc/screenshots/profile.png) |
+| *Calcul dynamique du Score de Risque local et compteurs en temps réel* | *Géolocalisation GPS, compression d'image et priorité déterministe* |                  *Tuiles OpenStreetMap, marqueurs colorés et cercles de risque*                  | *Sélecteur i18n (FR/EN), thème Clair/Sombre et Mode Haute Lisibilité* |
+
+---
+
+## Liste des Écrans (8 Écrans Fonctionnels)
 
 1. **Dashboard (`DashboardScreen`)** : Vue globale avec score de risque local (0-100), statistiques d'incidents (Total, Actifs, Résolus, Critiques) et fil d'actualité des récents signalements.
 2. **Liste des Incidents (`IncidentsScreen`)** : Feed filtrable par statut et catégorie avec pull-to-refresh et indicateurs de synchronisation hors-ligne.
@@ -32,7 +34,7 @@
 
 ---
 
-## ⚡ Performances & Optimisations (60 FPS Constant)
+## Performances & Optimisations (60 FPS Constant)
 
 - **Zéro Jank (60fps Constant)** : Utilisation exclusive de `ListView.builder` et `ListView.separated` pour le lazy-loading dynamique des listes, garantissant un défilement fluide sans saccades.
 - **Optimisation & Compression d'Images** : Pipeline `ImageHelper` utilisant `flutter_image_compress` pour redimensionner et compresser les photos localement (qualité moyenne, résolution adaptée) avant tout stockage ou upload réseau.
@@ -40,7 +42,7 @@
 
 ---
 
-## ♿ Accessibilité (Accessibility & A11y)
+## Accessibilité (Accessibility & A11y)
 
 - **Semantic Labels & Screen Readers** : Tous les éléments interactifs (boutons, cartes d'incidents, champs de texte) sont enveloppés dans des widgets `Semantics` avec descriptions localisées (`semanticIncidentCard`, `semanticBackButton`).
 - **Mode Haute Lisibilité (High Contrast Mode)** : Toggle dédié dans l'écran de profil ajustant dynamiquement les ratios de contraste des couleurs.
@@ -48,14 +50,14 @@
 
 ---
 
-## 🌐 Internationalisation (i18n)
+## Internationalisation (i18n)
 
 - **Multi-langue dynamique (Français / English)** : Fichiers ARB d'origine (`app_fr.arb`, `app_en.arb`) compilés via `flutter gen-l10n`.
 - **Changement à la volée** : Le basculement de langue s'effectue instantanément depuis le profil grâce à `localeProvider` sans redémarrer l'application.
 
 ---
 
-## 🧪 Tests & Quality Assurance
+## Tests & Quality Assurance
 
 L'application est couverte par une suite complète de **32 tests automatisés** :
 
@@ -86,7 +88,7 @@ flutter test integration_test/
 
 ---
 
-## 📦 CI/CD Pipeline (GitHub Actions)
+## CI/CD Pipeline (GitHub Actions)
 
 Le pipeline `.github/workflows/flutter.yml` s'exécute automatiquement sur chaque push et PR :
 
@@ -97,7 +99,7 @@ Le pipeline `.github/workflows/flutter.yml` s'exécute automatiquement sur chaqu
 
 ---
 
-## 🛠️ Configuration & Lancement
+##  Configuration & Lancement
 
 ```bash
 # 1. Obtenir les dépendances
@@ -112,6 +114,6 @@ flutter run --dart-define=SUPABASE_URL=https://your-project.supabase.co --dart-d
 
 ---
 
-## 📄 License
+## License
 
 Distribué sous la licence MIT. Voir `LICENSE` pour plus d'informations.
